@@ -1,0 +1,41 @@
+paths:
+  /users/{id}/change-email:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Users
+      summary: Change user email
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            minimum: 1
+          description: User ID
+        - in: body
+          name: change email
+          required: true
+          schema:
+            $ref: '#/definitions/changeEmail'
+      responses:
+        200:
+          description: Password changed successfully
+        401:
+          description: Unauthenticated
+        403:
+          description: Forbidden
+        409:
+          description: Email is taken
+        500:
+          description: Internal Server Error
+definitions:
+  changeEmail:
+    type: object
+    properties:
+      email:
+        type: string
+        format: email

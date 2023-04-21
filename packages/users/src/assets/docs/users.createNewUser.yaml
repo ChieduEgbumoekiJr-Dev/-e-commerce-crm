@@ -1,0 +1,58 @@
+paths:
+  /users/create:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Users
+      summary: creates a new user
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: sign up
+          description: Creates a user with a POST to /users
+          required: true
+          schema:
+            $ref: '#/definitions/signUp'
+      responses:
+        201:
+          description: Created user id
+        400:
+          description: Invalid input
+        403:
+          description: Forbidden
+        409:
+          description: User already exists
+        500:
+          description: Internal server error
+definitions:
+  signUp:
+    type: object
+    properties:
+      email:
+        type: string
+        format: email
+      password:
+        type: string
+        format: password
+      firstName:
+        type: string
+      lastName:
+        type: string
+      gender:
+        type: string
+        enum: ['male', 'female', 'other']
+      phone:
+        type: string
+      username:
+        type: string
+        minLength: 3
+        maxLength: 16
+      birthday:
+        type: string
+      addresses:
+        type: array
+        items:
+          $ref: '#/components/schemas/Address'
+        minItems: 1

@@ -1,0 +1,40 @@
+paths:
+  /users/{id}/status:
+    patch:
+      security:
+        - Bearer: []
+      tags:
+        - Users
+      summary: Change account mode
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            minimum: 1
+          description: User ID
+        - in: body
+          name: change email
+          required: true
+          schema:
+            $ref: '#/definitions/accountMode'
+      responses:
+        201:
+          description: Profile mode update successfully
+        401:
+          description: Unauthenticated
+        403:
+          description: Forbidden
+        500:
+          description: Internal Server Error
+definitions:
+  accountMode:
+    type: object
+    properties:
+      status:
+        type: string
+        required: false
+        enum: ['active', 'closed']

@@ -1,0 +1,63 @@
+paths:
+  /users/{id}:
+    patch:
+      security:
+        - Bearer: []
+      tags:
+        - Users
+      summary: Update Profile
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            minimum: 1
+          description: User ID
+        - in: body
+          name: change email
+          required: true
+          schema:
+            $ref: '#/definitions/updateProfile'
+      responses:
+        201:
+          description: Updated profile successfully
+        401:
+          description: Unauthenticated
+        403:
+          description: Forbidden
+        500:
+          description: Internal Server Error
+definitions:
+  updateProfile:
+    type: object
+    properties:
+      firstName:
+        type: string
+        required: false
+      lastName:
+        type: string
+        required: false
+      gender:
+        type: string
+        enum: ['male', 'female', 'other']
+        required: false
+      phone:
+        type: string
+        required: false
+      username:
+        type: string
+        minLength: 3
+        maxLength: 16
+        required: false
+      birthday:
+        type: string
+        required: false
+      addresses:
+        type: array
+        items:
+          $ref: '#/components/schemas/Address'
+        minItems: 1
+        required: false

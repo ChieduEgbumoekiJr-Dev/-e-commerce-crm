@@ -1,0 +1,27 @@
+paths:
+  /users/{id}:
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Users
+      summary: Delete user
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            minimum: 1
+          description: User ID
+      responses:
+        200:
+          description: User deleted successfully
+        401:
+          description: Unauthenticated
+        403:
+          description: Forbidden
+        500:
+          description: Internal Server Error
